@@ -69,8 +69,13 @@
 
       // TODO: 
       // Exercise 4: Create a new WebSocket connection with the server using the ws protocol.
-      const URL = '??://localhost:' + PORT;
+      
+      const URL = 'ws://localhost:' + PORT;
+      wsClient = new WebSocket(URL);
 
+      wsClient.onopen = ()=> {
+        console.log('A new client has connected!');
+      }
 
       // TODO:
       // Exercise 5: Respond to connections by defining the .onopen event handler.
