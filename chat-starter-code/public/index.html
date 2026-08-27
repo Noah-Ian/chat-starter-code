@@ -85,7 +85,10 @@
       // Exercise 7: Respond to messages from the servery by defining the .onmessage event handler
       // Exercise 9: Parse custom message types, formatting each message based on the type.
       
-
+      wsClient.onmessage =(MessageEvent) => {
+        const message = MessageEvent.data;
+        showMessageReceived(message);
+      }
 
       /* Note:
       The event handlers below are useful for properly cleaning up a closed/broken WebSocket client connection.
