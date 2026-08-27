@@ -44,10 +44,12 @@ const wsServer = new WebSocket.Server({ server: server });
   // Exercise 6: Respond to client messages
   // Exercise 7: Send a message back to the client, echoing the message received
   // Exercise 8: Broadcast messages received to all other clients
- wsServer.on('connection', (socket)=> 
-{
+ wsServer.on('connection', (socket)=> {
   console.log('A new client has connected!');
-}) 
+  socket.on('message', (data) => {
+    console.log(data);
+  })
+ })
 
 ///////////////////////////////////////////////
 ////////////// HELPER FUNCTIONS ///////////////
