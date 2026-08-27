@@ -48,7 +48,8 @@ const wsServer = new WebSocket.Server({ server: server });
   console.log('A new client has connected!');
   socket.on('message', (data) => {
     console.log(data);
-    socket.send('Message Received:' + data);
+    //socket.send('Message Received:' + data);
+   broadcast(data, socket);
   });
  })
 
@@ -59,6 +60,11 @@ const wsServer = new WebSocket.Server({ server: server });
 function broadcast(data, socketToOmit) {
   // TODO
   // Exercise 8: Implement the broadcast pattern. Exclude the emitting socket!
+   wsServer.clients.forEach(connectedClient => {
+      if (connectedClient.readyState === WebSocket.OPEN && connectedClient !== socketToOmit){
+      connectedClient.send(data);
+      }
+    })
 }
 
 // Start the server listening on localhost:8080
