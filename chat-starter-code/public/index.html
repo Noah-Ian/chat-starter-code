@@ -79,6 +79,11 @@
       // Exercise 5: Respond to connections by defining the .onopen event handler.
        wsClient.onopen = ()=> {
         console.log('A new client has connected!');
+
+        const data = {
+          type: 'NEW_USER'
+        }
+        wsClient.send(JSON.stringify(data))
       }
 
       // TODO:
@@ -87,7 +92,17 @@
       
       wsClient.onmessage =(MessageEvent) => {
         const message = MessageEvent.data;
-        showMessageReceived(message);
+        //showMessageReceived(message);
+        const {type, payload} = JSON.parse(message);
+        switch(type){
+          case 'NEW_USER':
+            showMessageReceived('<em>New User has Joined<em>');
+            break;
+          case 'NEW_MESSAGE':
+            showMessageReceived(payload.message);
+            break;
+          default:
+        }
       }
 
       /* Note:
@@ -118,7 +133,11 @@
       // TODO: 
       // Exercise 6: Send the message from the messageBox to the server
       // Exercise 9: Send the message in a custom message object with .type and .payload properties
-      wsClient.send(message);
+      const data = {
+        type: 'NEW_MESSAGE',
+        payload: {message: message}
+      }
+      wsClient.send(JSON.stringify(data));
     }
 
     ////////////////////////////////////////////////
